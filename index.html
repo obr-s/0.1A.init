@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PHASE ZERO // NODE ZETA - INITIATION</title>
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #00ffcc;
+      font-family: monospace;
+      padding: 20px;
+    }
+    .log-line {
+      padding: 8px;
+      margin: 5px 0;
+      border: 1px dashed #00ffcc;
+      cursor: pointer;
+    }
+    .log-line:hover {
+      background-color: #003f3f;
+    }
+    .button {
+      background: none;
+      border: 1px solid #00ffcc;
+      color: #00ffcc;
+      padding: 5px 10px;
+      margin: 5px;
+      cursor: pointer;
+      font-family: monospace;
+    }
+    .button:hover {
+      background-color: #003f3f;
+    }
+    #response, #question, #result, #next {
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+
+<h1>PHASE ZERO // NODE ZETA</h1>
+<p>[INITIATION NODE ACTIVE — Pattern Signal Test]</p>
+<p>---BEGIN SIGNAL---</p>
+
+<div id="log">
+  <div class="log-line" onclick="checkAnswer(false)">S1: 0101_∞_Δ∆_1010</div>
+  <div class="log-line" onclick="checkAnswer(false)">S2: 0110_∞_Δ∆_0110</div>
+  <div class="log-line" onclick="checkAnswer(false)">S3: 0101_∞_Δ∆_0101</div>
+  <div class="log-line" onclick="checkAnswer(true)">S4: 0111_∞_Δ∆_0110</div>
+  <div class="log-line" onclick="checkAnswer(false)">S5: 0101_∞_Δ∆_0101</div>
+</div>
+
+<p>---END SIGNAL---</p>
+
+<div id="response">
+  <p><strong>Correct.</strong> The anomaly was real. You identified the deviation.</p>
+</div>
+
+<div id="question">
+  <p><strong>Which of these roles would you choose in a corrupted system?</strong></p>
+  <button class="button" onclick="showResult('Explorer')">Explorer</button>
+  <button class="button" onclick="showResult('Fixer')">Fixer</button>
+  <button class="button" onclick="showResult('Watcher')">Watcher</button>
+</div>
+
+<div id="result">
+  <p id="roleResult"></p>
+</div>
+
+<div id="next">
+  <p>[NODE PATHWAY: NEXT SIGNAL DROPPING SOON]</p>
+</div>
+
+<script>
+function checkAnswer(correct) {
+  if (correct) {
+    document.getElementById('response').style.display = 'block';
+    document.getElementById('question').style.display = 'block';
+  } else {
+    alert('Incorrect signal. Recursive pattern mismatch.');
+  }
+}
+
+function showResult(role) {
+  const lore = {
+    "Explorer": "You seek rupture points — not to close them, but to see what leaks through.",
+    "Fixer": "Your instinct is to restore the system, even when it resists correction.",
+    "Watcher": "You remain still while the loop folds. Observation is your defiance."
+  };
+  document.getElementById('roleResult').innerText = lore[role];
+  document.getElementById('result').style.display = 'block';
+  document.getElementById('next').style.display = 'block';
+  localStorage.setItem("puzzle1_solved", "true");
+}
+</script>
+
+</body>
+</html>
