@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,7 +31,7 @@
     .button:hover {
       background-color: #003f3f;
     }
-    #response, #question, #result, #next {
+    #response, #question, #result, #next, #puzzle2clue {
       margin-top: 20px;
       display: none;
     }
@@ -44,8 +43,8 @@
 </head>
 <body>
 
-<h1>PHASE ZERO // NODE ZETA Initiation 0.1A</h1>
-<p>[INITIATION NODE ACTIVE — Pattern Signal Test]</p>
+<h1>PHASE ZERO // NODE ZETA</h1>
+<p>[INITIATION NODE 0.1A ACTIVE — Pattern Signal Test]</p>
 <p>---BEGIN SIGNAL---</p>
 
 <div id="log">
@@ -77,6 +76,12 @@
   <p>[NODE PATHWAY: NEXT SIGNAL DROPPING SOON]</p>
 </div>
 
+<div id="puzzle2clue">
+  <p>> SIGNAL VECTOR STABILIZED</p>
+  <p>> NEXT NODE: <code>echo-147.html</code></p>
+  <p><em>(Pattern memory required. Do not share this node externally.)</em></p>
+</div>
+
 <script>
 function checkAnswer(correct) {
   if (correct) {
@@ -96,6 +101,7 @@ function showResult(role) {
   document.getElementById('roleResult').innerText = lore[role];
   document.getElementById('result').style.display = 'block';
   document.getElementById('next').style.display = 'block';
+  document.getElementById('puzzle2clue').style.display = 'block';
   localStorage.setItem("puzzle1_solved", "true");
 }
 </script>
