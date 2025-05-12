@@ -44,7 +44,7 @@
 <body>
 
 <h1>PHASE ZERO // NODE ZETA</h1>
-<p>[INITIATION NODE 0.1A ACTIVE — Pattern Signal Test]</p>
+<p>[INITIATION NODE 01.A ACTIVE — Pattern Signal Test]</p>
 <p>---BEGIN SIGNAL---</p>
 
 <div id="log">
@@ -83,12 +83,37 @@
 </div>
 
 <script>
+let failCount = 0;
+let isLocked = false;
+
 function checkAnswer(correct) {
+  if (isLocked) return;
+
   if (correct) {
     document.getElementById('response').style.display = 'block';
     document.getElementById('question').style.display = 'block';
   } else {
+    failCount++;
+    isLocked = true;
     alert('Incorrect signal. Recursive pattern mismatch.');
+
+    // Increase lock time after 3 failed attempts
+    const lockTime = failCount >= 3 ? 10000 : 5000;
+
+    // Visually disable signal buttons
+    const signals = document.querySelectorAll('.log-line');
+    signals.forEach(el => {
+      el.style.pointerEvents = 'none';
+      el.style.opacity = 0.3;
+    });
+
+    setTimeout(() => {
+      isLocked = false;
+      signals.forEach(el => {
+        el.style.pointerEvents = 'auto';
+        el.style.opacity = 1;
+      });
+    }, lockTime);
   }
 }
 
