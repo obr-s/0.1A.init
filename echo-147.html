@@ -1,0 +1,110 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PHASE ZERO // NODE DELTA - RECURSION VECTOR</title>
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #00ffcc;
+      font-family: 'Courier New', monospace;
+      padding: 20px;
+    }
+    .terminal-line {
+      margin: 5px 0;
+    }
+    #inputArea {
+      margin-top: 20px;
+    }
+    #inputField {
+      background-color: #000;
+      color: #00ffcc;
+      border: 1px solid #00ffcc;
+      font-family: monospace;
+      padding: 5px;
+      width: 80%;
+    }
+    #executeButton {
+      background: none;
+      border: 1px solid #00ffcc;
+      color: #00ffcc;
+      padding: 5px 10px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+    #executeButton:hover {
+      background-color: #003f3f;
+    }
+    #output, #questionBlock, #puzzle3Clue {
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+  <script data-goatcounter="https://obr-s.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+<h1>PHASE ZERO // NODE DELTA</h1>
+<p>> SYSTEM NODE STATUS: 0.1A RECURSION PATTERN CHALLENGE</p>
+<p>> VECTOR ALIGNMENT REQUIRED</p>
+
+<div class="terminal-line">S1: [RE:loop:run:vector-△]</div>
+<div class="terminal-line">S2: [RE:∞zero:break:shell]</div>
+<div class="terminal-line">S3: [RE:loop:loop:break]</div>
+<div class="terminal-line">S4: [RE:loop:run:vector-β]</div>
+<div class="terminal-line">S5: [RE:run:loop:signal-Δ]</div>
+
+<div id="inputArea">
+  <label>> NEXT VECTOR:</label>
+  <input type="text" id="inputField" autocomplete="off" placeholder="e.g., RE:loop:run:vector-γ">
+  <button id="executeButton" onclick="submitAnswer()">Execute</button>
+</div>
+
+<div id="output"></div>
+
+<div id="questionBlock">
+  <p>> PATTERN VERIFIED</p>
+  <p>> RECURSION ACCEPTED</p>
+  <p>[Placeholder: This is where your question for user insight will appear.]</p>
+  <!-- Add inputs/buttons here later -->
+</div>
+
+<div id="puzzle3Clue">
+  <p>> NEW NODE AVAILABLE: <code>/vector-omega.html</code></p>
+  <p><em>(Do not echo this vector externally. Recursion breach is traceable.)</em></p>
+</div>
+
+<script>
+let isLocked = false;
+let failCount = 0;
+const correctAnswer = "RE:loop:run:vector-γ";
+
+function submitAnswer() {
+  if (isLocked) return;
+
+  const input = document.getElementById("inputField").value.trim();
+  const output = document.getElementById("output");
+
+  if (input === correctAnswer) {
+    output.innerHTML = "<p>> SIGNAL MATCHED</p><p>> LORE INTEGRITY INTACT</p>";
+    document.getElementById("questionBlock").style.display = "block";
+    document.getElementById("puzzle3Clue").style.display = "block";
+    localStorage.setItem("puzzle2_solved", "true");
+  } else {
+    failCount++;
+    isLocked = true;
+    let lockTime = failCount >= 3 ? 10000 : 5000;
+    output.innerHTML = `<p>> PATTERN DISSONANCE DETECTED</p><p>> LOCKOUT INITIATED (${lockTime / 1000}s)</p>`;
+
+    setTimeout(() => {
+      isLocked = false;
+      output.innerHTML = "";
+    }, lockTime);
+  }
+}
+</script>
+
+</body>
+</html>
