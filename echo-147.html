@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -72,34 +73,36 @@
 </div>
 
 <script>
-let isLocked = false;
-let failCount = 0;
-const correctAnswer = "RE:loop:run:vector-γ";
+document.addEventListener("DOMContentLoaded", function () {
+  let isLocked = false;
+  let failCount = 0;
+  const correctAnswer = "RE:loop:run:vector-γ";
 
-function submitAnswer() {
-  if (isLocked) return;
+  function submitAnswer() {
+    if (isLocked) return;
 
-  const input = document.getElementById("inputField").value.trim();
-  const output = document.getElementById("output");
+    const input = document.getElementById("inputField").value.trim();
+    const output = document.getElementById("output");
 
-  if (input === correctAnswer) {
-    output.innerHTML = "<p>> SIGNAL MATCHED</p><p>> LORE INTEGRITY INTACT</p>";
-    document.getElementById("tallyFormBlock").style.display = "block";
-    localStorage.setItem("puzzle2_solved", "true");
-  } else {
-    failCount++;
-    isLocked = true;
-    let lockTime = failCount >= 3 ? 10000 : 5000;
-    output.innerHTML = `<p>> PATTERN DISSONANCE DETECTED</p><p>> LOCKOUT INITIATED (${lockTime / 1000}s)</p>`;
+    if (input === correctAnswer) {
+      output.innerHTML = "<p>> SIGNAL MATCHED</p><p>> LORE INTEGRITY INTACT</p>";
+      document.getElementById("tallyFormBlock").style.display = "block";
+      localStorage.setItem("puzzle2_solved", "true");
+    } else {
+      failCount++;
+      isLocked = true;
+      let lockTime = failCount >= 3 ? 10000 : 5000;
+      output.innerHTML = `<p>> PATTERN DISSONANCE DETECTED</p><p>> LOCKOUT INITIATED (${lockTime / 1000}s)</p>`;
 
-    setTimeout(() => {
-      isLocked = false;
-      output.innerHTML = "";
-    }, lockTime);
+      setTimeout(() => {
+        isLocked = false;
+        output.innerHTML = "";
+      }, lockTime);
+    }
   }
-}
 
-document.getElementById("executeButton").addEventListener("click", submitAnswer);
+  document.getElementById("executeButton").addEventListener("click", submitAnswer);
+});
 </script>
 
 </body>
