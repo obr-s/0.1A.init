@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -39,6 +40,10 @@
       margin-top: 20px;
       display: none;
     }
+    .disabled {
+      opacity: 0.4;
+      pointer-events: none;
+    }
   </style>
   <script data-goatcounter="https://obr-s.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
@@ -72,34 +77,49 @@
 </div>
 
 <script>
-let isLocked = false;
-let failCount = 0;
-const correctAnswer = "RE:loop:run:vector-γ";
+document.addEventListener("DOMContentLoaded", function () {
+  let isLocked = false;
+  let failCount = 0;
+  const correctAnswer = "RE:loop:run:vector-γ";
 
-function submitAnswer() {
-  if (isLocked) return;
+  function submitAnswer() {
+    if (isLocked) return;
 
-  const input = document.getElementById("inputField").value.trim();
-  const output = document.getElementById("output");
+    const inputElem = document.getElementById("inputField");
+    const buttonElem = document.getElementById("executeButton");
+    const input = inputElem.value.trim().normalize();
+    const output = document.getElementById("output");
 
-  if (input === correctAnswer) {
-    output.innerHTML = "<p>> SIGNAL MATCHED</p><p>> LORE INTEGRITY INTACT</p>";
-    document.getElementById("tallyFormBlock").style.display = "block";
-    localStorage.setItem("puzzle2_solved", "true");
-  } else {
-    failCount++;
-    isLocked = true;
-    let lockTime = failCount >= 3 ? 10000 : 5000;
-    output.innerHTML = `<p>> PATTERN DISSONANCE DETECTED</p><p>> LOCKOUT INITIATED (${lockTime / 1000}s)</p>`;
-    setTimeout(() => {
-      isLocked = false;
-      output.innerHTML = "";
-    }, lockTime);
+    if (input === correctAnswer.normalize()) {
+      output.innerHTML = "<p>> SIGNAL MATCHED</p><p>> LORE INTEGRITY INTACT</p>";
+      document.getElementById("tallyFormBlock").style.display = "block";
+      localStorage.setItem("puzzle2_solved", "true");
+    } else {
+      failCount++;
+      isLocked = true;
+
+      let lockTime = failCount === 1 ? 3000 :
+                     failCount === 2 ? 5000 :
+                     failCount === 3 ? 7000 : 10000;
+
+      output.innerHTML = `<p>> PATTERN DISSONANCE DETECTED</p><p>> LOCKOUT INITIATED (${lockTime / 1000}s)</p>`;
+
+      inputElem.disabled = true;
+      buttonElem.disabled = true;
+      inputElem.classList.add("disabled");
+      buttonElem.classList.add("disabled");
+
+      setTimeout(() => {
+        isLocked = false;
+        output.innerHTML = "";
+        inputElem.disabled = false;
+        buttonElem.disabled = false;
+        inputElem.classList.remove("disabled");
+        buttonElem.classList.remove("disabled");
+      }, lockTime);
+    }
   }
-}
 
-// ✅ Bind after page load to avoid silent errors
-window.onload = function () {
   document.getElementById("executeButton").addEventListener("click", submitAnswer);
   document.getElementById("inputField").addEventListener("keydown", function (e) {
     if (e.key === "Enter") {
@@ -107,7 +127,7 @@ window.onload = function () {
       submitAnswer();
     }
   });
-};
+});
 </script>
 
 </body>
