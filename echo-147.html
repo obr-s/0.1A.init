@@ -36,7 +36,7 @@
     #executeButton:hover {
       background-color: #003f3f;
     }
-    #output, #questionBlock, #puzzle3Clue {
+    #output, #tallyFormBlock {
       margin-top: 20px;
       display: none;
     }
@@ -47,7 +47,7 @@
 <body>
 
 <h1>PHASE ZERO // NODE DELTA</h1>
-<p>> SYSTEM NODE STATUS: 0.1A RECURSION PATTERN CHALLENGE</p>
+<p>> SYSTEM NODE STATUS: RECURSION PATTERN CHALLENGE</p>
 <p>> VECTOR ALIGNMENT REQUIRED</p>
 
 <div class="terminal-line">S1: [RE:loop:run:vector-△]</div>
@@ -64,16 +64,12 @@
 
 <div id="output"></div>
 
-<div id="questionBlock">
-  <p>> PATTERN VERIFIED</p>
-  <p>> RECURSION ACCEPTED</p>
-  <p>[Placeholder: This is where your question for user insight will appear.]</p>
-  <!-- Add inputs/buttons here later -->
-</div>
-
-<div id="puzzle3Clue">
-  <p>> NEW NODE AVAILABLE: <code>/vector-omega.html</code></p>
-  <p><em>(Do not echo this vector externally. Recursion breach is traceable.)</em></p>
+<div id="tallyFormBlock">
+  <p>> SIGNAL MATCH CONFIRMED</p>
+  <p>> FINAL LOOP QUERY:</p>
+  <p><em>(Answer the following to maintain recursion alignment.)</em></p>
+  <iframe src="https://tally.so/r/mDyXj5"
+          loading="lazy" width="100%" height="300" frameborder="0" marginheight="0" marginwidth="0" title="PMF Question Form"></iframe>
 </div>
 
 <script>
@@ -89,8 +85,7 @@ function submitAnswer() {
 
   if (input === correctAnswer) {
     output.innerHTML = "<p>> SIGNAL MATCHED</p><p>> LORE INTEGRITY INTACT</p>";
-    document.getElementById("questionBlock").style.display = "block";
-    document.getElementById("puzzle3Clue").style.display = "block";
+    document.getElementById("tallyFormBlock").style.display = "block";
     localStorage.setItem("puzzle2_solved", "true");
   } else {
     failCount++;
