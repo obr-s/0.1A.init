@@ -80,18 +80,29 @@
 document.addEventListener("DOMContentLoaded", function () {
   let isLocked = false;
   let failCount = 0;
-  const correctAnswer = "RE:loop:run:vector-γ";
+
+  const acceptedAnswers = [
+    "re:loop:run:vector-γ",
+    "re:loop:run:vector-g",
+    "re:loop:run:vector-gamma"
+  ];
 
   function submitAnswer() {
     if (isLocked) return;
 
     const inputElem = document.getElementById("inputField");
     const buttonElem = document.getElementById("executeButton");
-    const input = inputElem.value.trim().normalize();
+    const input = inputElem.value.trim().toLowerCase().replace(/\s+/g, "").normalize();
     const output = document.getElementById("output");
 
-    if (input === correctAnswer.normalize()) {
+    if (acceptedAnswers.includes(input)) {
+      output.style.display = "block";
       output.innerHTML = "<p>> SIGNAL MATCHED</p><p>> LORE INTEGRITY INTACT</p>";
+
+      if (input === "re:loop:run:vector-γ") {
+        output.innerHTML += "<p>> BONUS: VECTOR MATCHED WITH UNCOMMON CHARACTER — COGNITIVE SHARPENING DETECTED</p>";
+      }
+
       document.getElementById("tallyFormBlock").style.display = "block";
       localStorage.setItem("puzzle2_solved", "true");
     } else {
@@ -102,7 +113,10 @@ document.addEventListener("DOMContentLoaded", function () {
                      failCount === 2 ? 5000 :
                      failCount === 3 ? 7000 : 10000;
 
-      output.innerHTML = `<p>> PATTERN DISSONANCE DETECTED</p><p>> LOCKOUT INITIATED (${lockTime / 1000}s)</p>`;
+      output.style.display = "block";
+      output.innerHTML = `<p>> PATTERN DISSONANCE DETECTED</p>
+                          <p>> LOCKOUT INITIATED (${lockTime / 1000}s)</p>
+                          <p>> HINT: UNCOMMON CHARACTER PRESENT — COPY/PASTE MAY BE REQUIRED</p>`;
 
       inputElem.disabled = true;
       buttonElem.disabled = true;
@@ -111,7 +125,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
       setTimeout(() => {
         isLocked = false;
-        output.innerHTML = "";
         inputElem.disabled = false;
         buttonElem.disabled = false;
         inputElem.classList.remove("disabled");
