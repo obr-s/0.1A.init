@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -59,7 +58,7 @@
 <div id="inputArea">
   <label>> NEXT VECTOR:</label>
   <input type="text" id="inputField" autocomplete="off" placeholder="e.g., RE:loop:run:vector-γ">
-  <button id="executeButton" onclick="submitAnswer()">Execute</button>
+  <button id="executeButton">Execute</button>
 </div>
 
 <div id="output"></div>
@@ -99,6 +98,8 @@ function submitAnswer() {
     }, lockTime);
   }
 }
+
+document.getElementById("executeButton").addEventListener("click", submitAnswer);
 </script>
 
 </body>
