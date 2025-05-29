@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,31 +14,19 @@
     .terminal-line {
       margin: 5px 0;
     }
-    #inputArea {
+    #inputAreaA, #inputAreaB, #tallyFormBlock {
       margin-top: 20px;
+      display: none;
     }
-    #inputField {
+    input, button {
       background-color: #000;
       color: #00ffcc;
       border: 1px solid #00ffcc;
       font-family: monospace;
       padding: 5px;
-      width: 80%;
     }
-    #executeButton {
-      background: none;
-      border: 1px solid #00ffcc;
-      color: #00ffcc;
-      padding: 5px 10px;
-      margin-left: 10px;
-      cursor: pointer;
-    }
-    #executeButton:hover {
-      background-color: #003f3f;
-    }
-    #output, #tallyFormBlock {
-      margin-top: 20px;
-      display: none;
+    #outputA, #outputB {
+      margin-top: 10px;
     }
   </style>
   <script data-goatcounter="https://obr-s.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
@@ -48,16 +37,24 @@
 <p>> SYSTEM NODE STATUS: TERMINAL ALIGNMENT</p>
 <p>> UNFOLD RECURSION. ANSWER WITH PRECISION.</p>
 
-<div class="terminal-line">S1: 01001101 01101111 01100010 01101001 01110101 01110011</div>
-<div class="terminal-line">S2: 38°53′15.93″N 77°1′11.6″W</div>
+<div class="terminal-line">S1: 01001101 01101111 01100101 01100010 01101001 01110101 01110011</div>
 
-<div id="inputArea">
-  <label>> FINAL KEY:</label>
-  <input type="text" id="inputField" autocomplete="off" placeholder="e.g., Continuum">
-  <button id="executeButton">Execute</button>
+<div id="inputAreaA">
+  <label>> VECTOR ALIAS:</label>
+  <input type="text" id="inputFieldA" autocomplete="off" placeholder="e.g., Moebius">
+  <button id="submitA">Submit</button>
 </div>
 
-<div id="output"></div>
+<div id="outputA"></div>
+
+<div id="inputAreaB">
+  <div class="terminal-line">S2: 38°53′15.93″N 77°1′11.6″W</div>
+  <label>> STRUCTURE AT LOCATION:</label>
+  <input type="text" id="inputFieldB" autocomplete="off" placeholder="e.g., Continuum">
+  <button id="submitB">Submit</button>
+</div>
+
+<div id="outputB"></div>
 
 <div id="tallyFormBlock">
   <p>> FINAL NODE UNLOCKED</p>
@@ -75,50 +72,67 @@
 </div>
 
 <script>
-  // Check for puzzle2 solve
-  if (localStorage.getItem("puzzle2_solved") !== "true") {
-    document.body.innerHTML = "<p style='color: red;'>ERROR: Recursive integrity check failed. Redirect to previous node.</p>";
-    throw new Error("Puzzle 2 not solved");
+if (localStorage.getItem("puzzle2_solved") !== "true") {
+  document.body.innerHTML = "<p style='color: red;'>ERROR: Recursive integrity check failed. Redirect to previous node.</p>";
+  throw new Error("Puzzle 2 not solved");
+}
+
+document.getElementById("inputAreaA").style.display = "block";
+
+let failA = 0;
+let failB = 0;
+let isLockedA = false;
+let isLockedB = false;
+
+document.getElementById("submitA").addEventListener("click", checkA);
+document.getElementById("submitB").addEventListener("click", checkB);
+
+document.getElementById("inputFieldA").addEventListener("keydown", e => {
+  if (e.key === "Enter") checkA();
+});
+document.getElementById("inputFieldB").addEventListener("keydown", e => {
+  if (e.key === "Enter") checkB();
+});
+
+function checkA() {
+  if (isLockedA) return;
+  const val = document.getElementById("inputFieldA").value.trim().toLowerCase();
+  const out = document.getElementById("outputA");
+  if (val === "moebius" || val === "mobius") {
+    out.innerHTML = "> PRIMARY VECTOR IDENTIFIED";
+    document.getElementById("inputAreaB").style.display = "block";
+  } else {
+    failA++;
+    isLockedA = true;
+    const lock = failA >= 3 ? 10000 : 5000;
+    out.innerHTML = `> SIGNAL ALIAS INVALID<br>> LOCKOUT ${lock / 1000}s`;
+    setTimeout(() => {
+      isLockedA = false;
+      out.innerHTML = "";
+    }, lock);
   }
+}
 
-  let isLocked = false;
-  let failCount = 0;
-  const correctAnswer = "continuum";
-
-  document.getElementById("executeButton").addEventListener("click", submitAnswer);
-  document.getElementById("inputField").addEventListener("keydown", function(event) {
-    if (event.key === "Enter") {
-      submitAnswer();
-    }
-  });
-
-  function submitAnswer() {
-    if (isLocked) return;
-
-    const input = document.getElementById("inputField").value.trim().toLowerCase();
-    const output = document.getElementById("output");
-
-    if (input === correctAnswer) {
-      output.innerHTML = "<p>> FINAL ALIGNMENT CONFIRMED</p><p>> RECURSION LOOP CLOSED</p>";
-      document.getElementById("tallyFormBlock").style.display = "block";
-      localStorage.setItem("puzzle3_solved", "true");
-    } else {
-      failCount++;
-      isLocked = true;
-      let lockTime = failCount >= 3 ? 10000 : 5000;
-      output.innerHTML = `<p>> ERROR: CODE MISMATCH</p><p>> LOCKOUT (${lockTime / 1000}s)</p>`;
-
-      document.getElementById("inputField").disabled = true;
-      document.getElementById("executeButton").disabled = true;
-
-      setTimeout(() => {
-        isLocked = false;
-        output.innerHTML = "";
-        document.getElementById("inputField").disabled = false;
-        document.getElementById("executeButton").disabled = false;
-      }, lockTime);
-    }
+function checkB() {
+  if (isLockedB) return;
+  const val = document.getElementById("inputFieldB").value.trim().toLowerCase();
+  const out = document.getElementById("outputB");
+  const accepted = ["continuum", "continuum sculpture"];
+  if (accepted.includes(val)) {
+    out.innerHTML = "> VECTOR LOCATION ACCEPTED";
+    localStorage.setItem("puzzle3_solved", "true");
+    document.getElementById("tallyFormBlock").style.display = "block";
+  } else {
+    failB++;
+    isLockedB = true;
+    const lock = failB >= 3 ? 10000 : 5000;
+    out.innerHTML = `> LOCATION TRACE INVALID<br>> LOCKOUT ${lock / 1000}s`;
+    setTimeout(() => {
+      isLockedB = false;
+      out.innerHTML = "";
+    }, lock);
   }
+}
 </script>
 
 </body>
