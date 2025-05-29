@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PHASE ZERO // NODE OMEGA - FINAL LOOP</title>
+  <style>
+    body {
+      background-color: #0a0a0a;
+      color: #00ffcc;
+      font-family: monospace;
+      padding: 20px;
+    }
+    .terminal-line {
+      margin: 5px 0;
+    }
+    #inputArea {
+      margin-top: 20px;
+    }
+    #inputField {
+      background-color: #000;
+      color: #00ffcc;
+      border: 1px solid #00ffcc;
+      font-family: monospace;
+      padding: 5px;
+      width: 80%;
+    }
+    #executeButton {
+      background: none;
+      border: 1px solid #00ffcc;
+      color: #00ffcc;
+      padding: 5px 10px;
+      margin-left: 10px;
+      cursor: pointer;
+    }
+    #executeButton:hover {
+      background-color: #003f3f;
+    }
+    #output, #tallyFormBlock {
+      margin-top: 20px;
+      display: none;
+    }
+  </style>
+  <script data-goatcounter="https://obr-s.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</head>
+<body>
+
+<h1>PHASE ZERO // NODE OMEGA</h1>
+<p>> SYSTEM NODE STATUS: TERMINAL ALIGNMENT</p>
+<p>> UNFOLD RECURSION. ANSWER WITH PRECISION.</p>
+
+<div class="terminal-line">S1: 01001101 01101111 01100010 01101001 01110101 01110011</div>
+<div class="terminal-line">S2: 38°53′15.93″N 77°1′11.6″W</div>
+
+<div id="inputArea">
+  <label>> FINAL KEY:</label>
+  <input type="text" id="inputField" autocomplete="off" placeholder="e.g., Continuum">
+  <button id="executeButton">Execute</button>
+</div>
+
+<div id="output"></div>
+
+<div id="tallyFormBlock">
+  <p>> FINAL NODE UNLOCKED</p>
+  <p>> INPUT LOOP IMPRINT BELOW TO COMPLETE RECURSION</p>
+  <iframe 
+    src="https://tally.so/r/mYyo1d" 
+    loading="lazy" 
+    width="100%" 
+    height="360" 
+    frameborder="0" 
+    marginheight="0" 
+    marginwidth="0" 
+    title="Phase Zero Loop Imprint Form">
+  </iframe>
+</div>
+
+<script>
+  // Check for puzzle2 solve
+  if (localStorage.getItem("puzzle2_solved") !== "true") {
+    document.body.innerHTML = "<p style='color: red;'>ERROR: Recursive integrity check failed. Redirect to previous node.</p>";
+    throw new Error("Puzzle 2 not solved");
+  }
+
+  let isLocked = false;
+  let failCount = 0;
+  const correctAnswer = "continuum";
+
+  document.getElementById("executeButton").addEventListener("click", submitAnswer);
+  document.getElementById("inputField").addEventListener("keydown", function(event) {
+    if (event.key === "Enter") {
+      submitAnswer();
+    }
+  });
+
+  function submitAnswer() {
+    if (isLocked) return;
+
+    const input = document.getElementById("inputField").value.trim().toLowerCase();
+    const output = document.getElementById("output");
+
+    if (input === correctAnswer) {
+      output.innerHTML = "<p>> FINAL ALIGNMENT CONFIRMED</p><p>> RECURSION LOOP CLOSED</p>";
+      document.getElementById("tallyFormBlock").style.display = "block";
+      localStorage.setItem("puzzle3_solved", "true");
+    } else {
+      failCount++;
+      isLocked = true;
+      let lockTime = failCount >= 3 ? 10000 : 5000;
+      output.innerHTML = `<p>> ERROR: CODE MISMATCH</p><p>> LOCKOUT (${lockTime / 1000}s)</p>`;
+
+      document.getElementById("inputField").disabled = true;
+      document.getElementById("executeButton").disabled = true;
+
+      setTimeout(() => {
+        isLocked = false;
+        output.innerHTML = "";
+        document.getElementById("inputField").disabled = false;
+        document.getElementById("executeButton").disabled = false;
+      }, lockTime);
+    }
+  }
+</script>
+
+</body>
+</html>
